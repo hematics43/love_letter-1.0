@@ -3,21 +3,23 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Love Letter UI - Mobile Friendly</title>
+<title>Love Letter UI with Emoji Drag & Drop</title>
 <style>
   /* Reset & base */
   * {
     box-sizing: border-box;
   }
   body {
-    font-family: Arial, sans-serif;
-    background: #f8f4ef;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #1e1e2f;
     margin: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    color: #333;
+    color: #eee;
+    overflow-x: hidden;
   }
   #controls {
     margin-bottom: 20px;
@@ -39,6 +41,7 @@
     border-radius: 6px;
     border: 1.5px solid #ccc;
     background: white;
+    color: #222;
     cursor: pointer;
     transition: border-color 0.3s ease;
   }
@@ -60,63 +63,65 @@
 
   /* Love letter box */
   .love-letter {
+    position: relative;
     width: 100%;
     max-width: 600px;
-    min-height: 400px;
+    min-height: 420px;
     padding: 30px 38px;
     border-radius: 16px;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.7);
     background: white;
     color: #333;
     line-height: 1.6;
     user-select: text;
     outline: none;
     transition: background 0.4s ease, box-shadow 0.4s ease;
+    overflow: hidden;
   }
   .love-letter:focus-within {
     box-shadow: 0 12px 35px rgba(255, 107, 107, 0.7);
   }
 
-  /* Paper styles */
+  /* Paper styles with colorful CSS backgrounds */
   .paper-style-1 {
-    background: #fff9f6 url('https://www.transparenttextures.com/patterns/pw-maze-white.png') repeat;
-    border: 1px solid #e8d7cd;
-    box-shadow: inset 0 0 8px #d4b5a7;
+    background: linear-gradient(135deg, #fff0f6, #ffe6f0);
+    border: 1px solid #f9c0d3;
+    box-shadow: inset 0 0 8px #f4a6bf;
   }
   .paper-style-2 {
-    background: #fefcea url('https://www.transparenttextures.com/patterns/diagmonds-light.png') repeat;
-    border: 2px dashed #e5d7a1;
+    background: linear-gradient(135deg, #fffbea, #fff1c1);
+    border: 2px dashed #f7db76;
   }
   .paper-style-3 {
-    background: #f4f0ec url('https://www.transparenttextures.com/patterns/cloth-alike.png') repeat;
-    border-left: 10px solid #d9c4b6;
+    background: linear-gradient(45deg, #f0f8ff, #cce4f7);
+    border-left: 10px solid #92b7f7;
   }
   .paper-style-4 {
-    background: linear-gradient(135deg, #fff9f9 25%, #ffecec 100%);
+    background: linear-gradient(135deg, #fff9f9, #ffecec);
     border: 1px solid #f1c0c0;
-    background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+    box-shadow: 0 0 15px #f9c6c9;
   }
   .paper-style-5 {
-    background: #fff url('https://www.transparenttextures.com/patterns/linen.png') repeat;
+    background: linear-gradient(135deg, #fffaf0, #f6e6d3);
     border: 2px double #d4b2b2;
   }
   .paper-style-6 {
-    background: #fcfaf2 url('https://www.transparenttextures.com/patterns/reticula.png') repeat;
+    background: linear-gradient(135deg, #fcfaf2, #e5ddb0);
     border: 3px solid #c2b280;
     box-shadow: inset 0 0 5px #c2b280;
   }
   .paper-style-7 {
-    background: linear-gradient(45deg, #f9f7f1 0%, #e6dcd0 100%);
+    background: linear-gradient(45deg, #f9f7f1, #e6dcd0);
     border: 1px solid #b5a99e;
-    background-image: url('https://www.transparenttextures.com/patterns/batthern.png');
+    box-shadow: 0 0 8px #c5b9ad;
   }
   .paper-style-8 {
-    background: #fffaf0 url('https://www.transparenttextures.com/patterns/french-tiles.png') repeat;
+    background: linear-gradient(135deg, #fffaf0, #f7dfb7);
     border: 1px solid #e0c097;
     box-shadow: 0 0 15px rgba(224,192,151,0.3);
   }
   .paper-style-9 {
-    background: #f6f1e7 url('https://www.transparenttextures.com/patterns/crissxcross.png') repeat;
+    background: linear-gradient(135deg, #f6f1e7, #d9c6b8);
     border: 4px ridge #d9c6b8;
   }
   .paper-style-10 {
@@ -129,22 +134,32 @@
     );
     border: 2px solid #cfc3a6;
   }
+  /* Glowing theme */
+  .paper-style-11 {
+    background: linear-gradient(135deg, #2e003e, #7b00ff);
+    border: 3px solid #b84eff;
+    box-shadow:
+      0 0 8px #b84eff,
+      0 0 20px #9b36ff,
+      0 0 40px #7b00ff;
+    color: #fff;
+  }
 
-  /* Fonts */
+  /* Fonts fallback system fonts */
   .font-pacifico {
-    font-family: 'Pacifico', cursive;
+    font-family: cursive, 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
   }
   .font-dancing-script {
-    font-family: 'Dancing Script', cursive;
+    font-family: cursive, 'Lucida Handwriting', 'Segoe Script', cursive, sans-serif;
   }
   .font-indie-flower {
-    font-family: 'Indie Flower', cursive;
+    font-family: cursive, 'Brush Script MT', cursive, sans-serif;
   }
   .font-roboto {
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
   }
   .font-times-new-roman {
-    font-family: 'Times New Roman', serif;
+    font-family: 'Times New Roman', Times, serif;
   }
 
   /* Editable text */
@@ -179,8 +194,55 @@
     border: 0;
   }
 
+  /* Emoji panel */
+  #emojiPanel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #2e003e;
+    border-top: 3px solid #b84eff;
+    padding: 8px 12px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 12px;
+    z-index: 1000;
+  }
+  #emojiPanel::-webkit-scrollbar {
+    height: 8px;
+  }
+  #emojiPanel::-webkit-scrollbar-thumb {
+    background-color: #b84eff;
+    border-radius: 4px;
+  }
+  .emoji {
+    font-size: 28px;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s ease;
+  }
+  .emoji:active {
+    cursor: grabbing;
+    transform: scale(1.2);
+  }
+
+  /* Draggable emoji style */
+  .dragging {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    z-index: 9999;
+    cursor: grabbing !important;
+    transition: none !important;
+    font-size: 32px !important;
+  }
+
   /* Responsive */
   @media (max-width: 650px) {
+    body {
+      margin: 10px 8px 80px 8px; /* bottom space for emoji panel */
+    }
     #controls {
       flex-direction: column;
       gap: 12px;
@@ -198,12 +260,18 @@
     .sender {
       font-size: 1rem;
     }
+    #emojiPanel {
+      padding: 6px 10px;
+      gap: 10px;
+    }
+    .emoji {
+      font-size: 24px;
+    }
+    .dragging {
+      font-size: 28px !important;
+    }
   }
 </style>
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Indie+Flower&family=Pacifico&family=Roboto&display=swap" rel="stylesheet" />
-
 </head>
 <body>
 
@@ -220,6 +288,7 @@
     <option value="paper-style-8">Style 8</option>
     <option value="paper-style-9">Style 9</option>
     <option value="paper-style-10">Style 10</option>
+    <option value="paper-style-11">Glowing Theme</option>
   </select>
   <span id="paperStyleDesc" class="sr-only">Select the background style of the letter</span>
 
@@ -237,13 +306,18 @@
 </div>
 
 <div id="loveLetter" class="love-letter paper-style-1 font-pacifico" contenteditable="false" role="main" aria-label="Editable love letter">
-  <h1 class="editable title" contenteditable="true" aria-label="Letter Title" spellcheck="true">My Beloved</h1>
-  <p class="editable message" contenteditable="true" aria-label="Letter Message" spellcheck="true">
-    Every moment with you is a treasure. Your smile brightens my darkest days, and your love fills my heart with joy.
+  <h1 class="title editable" contenteditable="true" spellcheck="true" aria-label="Edit title">My Dearest Love,</h1>
+  <p class="message editable" contenteditable="true" spellcheck="true" aria-label="Edit message">
+    You are the light of my life and the joy in my heart. Every moment with you is a treasure that I cherish deeply.
   </p>
-  <p class="editable sender" contenteditable="true" aria-label="Letter Sender" spellcheck="true">
-    With love,<br />Your Sweetheart
+  <p class="sender editable" contenteditable="true" spellcheck="true" aria-label="Edit sender">
+    With all my love,<br />Your Forever
   </p>
+</div>
+
+<!-- Emoji panel -->
+<div id="emojiPanel" aria-label="Emoji selection panel" role="region" tabindex="0">
+  <!-- Emoji buttons will be inserted here -->
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -252,41 +326,241 @@
   const paperStyleSelect = document.getElementById('paperStyleSelect');
   const fontSelect = document.getElementById('fontSelect');
   const downloadBtn = document.getElementById('downloadBtn');
+  const emojiPanel = document.getElementById('emojiPanel');
 
-  paperStyleSelect.addEventListener('change', () => {
-    for(let i=1; i<=10; i++){
-      loveLetter.classList.remove('paper-style-'+i);
-    }
-    loveLetter.classList.add(paperStyleSelect.value);
-  });
+  // Paper & font style update
+  function updateStyles() {
+    loveLetter.className = 'love-letter ' + paperStyleSelect.value + ' ' + fontSelect.value;
+  }
+  paperStyleSelect.addEventListener('change', updateStyles);
+  fontSelect.addEventListener('change', updateStyles);
 
-  fontSelect.addEventListener('change', () => {
-    loveLetter.classList.remove('font-pacifico', 'font-dancing-script', 'font-indie-flower', 'font-roboto', 'font-times-new-roman');
-    loveLetter.classList.add(fontSelect.value);
-  });
-
-  downloadBtn.addEventListener('click', () => {
-    // Remove focus for crisp canvas
+  // Download PNG
+  downloadBtn.addEventListener('click', async () => {
     document.activeElement.blur();
-    generateCanvasAndDownload();
-  });
 
-  async function generateCanvas() {
-    return await html2canvas(loveLetter, {
+    // Temporarily remove draggable emojis' pointer events to avoid capture issues
+    const emojis = loveLetter.querySelectorAll('.draggable-emoji');
+    emojis.forEach(e => e.style.pointerEvents = 'none');
+
+    const canvas = await html2canvas(loveLetter, {
       backgroundColor: null,
       scale: window.devicePixelRatio * 2,
       useCORS: true,
       scrollY: -window.scrollY,
     });
-  }
 
-  async function generateCanvasAndDownload() {
-    const canvas = await generateCanvas();
+    emojis.forEach(e => e.style.pointerEvents = 'auto');
+
     const link = document.createElement('a');
     link.download = 'love_letter.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
+  });
+
+  // Emoji list (common love/heart emojis + some cute ones)
+  const emojis = ['❤️', '😍', '🥰', '😘', '💖', '💕', '💌', '🌹', '💐', '✨', '😊', '💞', '❣️', '🌟', '💫'];
+
+  // Create emoji buttons in panel
+  emojis.forEach(emoji => {
+    const span = document.createElement('span');
+    span.className = 'emoji';
+    span.textContent = emoji;
+    span.setAttribute('tabindex', '0');
+    emojiPanel.appendChild(span);
+
+    // Drag & drop support
+    span.addEventListener('mousedown', startDrag);
+    span.addEventListener('touchstart', startDrag, {passive: false});
+  });
+
+  let draggingEmoji = null;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  function startDrag(e) {
+    e.preventDefault();
+    const target = e.target;
+    if (!target.classList.contains('emoji')) return;
+
+    // Clone emoji for dragging
+    draggingEmoji = target.cloneNode(true);
+    draggingEmoji.classList.add('dragging', 'draggable-emoji');
+    document.body.appendChild(draggingEmoji);
+
+    // Calculate offset inside emoji where clicked/touched
+    const rect = target.getBoundingClientRect();
+    if(e.type.startsWith('touch')) {
+      offsetX = e.touches[0].clientX - rect.left;
+      offsetY = e.touches[0].clientY - rect.top;
+    } else {
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+    }
+
+    moveDrag(e);
+
+    window.addEventListener('mousemove', moveDrag);
+    window.addEventListener('touchmove', moveDrag, {passive: false});
+    window.addEventListener('mouseup', endDrag);
+    window.addEventListener('touchend', endDrag);
   }
+
+  function moveDrag(e) {
+    if (!draggingEmoji) return;
+    e.preventDefault();
+
+    let clientX, clientY;
+    if(e.type.startsWith('touch')) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    draggingEmoji.style.left = (clientX - offsetX) + 'px';
+    draggingEmoji.style.top = (clientY - offsetY) + 'px';
+  }
+
+  function endDrag(e) {
+    if (!draggingEmoji) return;
+
+    // Check if drop inside loveLetter container
+    const letterRect = loveLetter.getBoundingClientRect();
+    const emojiRect = draggingEmoji.getBoundingClientRect();
+
+    // Calculate drop coords relative to loveLetter container
+    const dropX = emojiRect.left - letterRect.left;
+    const dropY = emojiRect.top - letterRect.top;
+
+    if (
+      emojiRect.left >= letterRect.left &&
+      emojiRect.top >= letterRect.top &&
+      emojiRect.right <= letterRect.right + 40 && // small margin for emoji size
+      emojiRect.bottom <= letterRect.bottom + 40
+    ) {
+      // Append emoji inside loveLetter as absolutely positioned element
+      const emojiElem = document.createElement('span');
+      emojiElem.textContent = draggingEmoji.textContent;
+      emojiElem.className = 'draggable-emoji';
+      emojiElem.style.position = 'absolute';
+      emojiElem.style.left = dropX + 'px';
+      emojiElem.style.top = dropY + 'px';
+      emojiElem.style.fontSize = '32px';
+      emojiElem.style.cursor = 'move';
+      emojiElem.style.userSelect = 'none';
+      emojiElem.style.zIndex = '10';
+
+      // Make emoji draggable inside letter after drop
+      makeEmojiDraggable(emojiElem);
+
+      loveLetter.appendChild(emojiElem);
+    }
+
+    draggingEmoji.remove();
+    draggingEmoji = null;
+
+    window.removeEventListener('mousemove', moveDrag);
+    window.removeEventListener('touchmove', moveDrag);
+    window.removeEventListener('mouseup', endDrag);
+    window.removeEventListener('touchend', endDrag);
+  }
+
+  // Make existing emojis inside letter draggable after drop
+  function makeEmojiDraggable(elem) {
+    let isDragging = false;
+    let startX, startY, origX, origY;
+
+    function dragStart(e) {
+      e.preventDefault();
+      isDragging = true;
+
+      const rect = elem.getBoundingClientRect();
+      if(e.type.startsWith('touch')) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      } else {
+        startX = e.clientX;
+        startY = e.clientY;
+      }
+      origX = rect.left;
+      origY = rect.top;
+
+      elem.style.cursor = 'grabbing';
+
+      window.addEventListener('mousemove', dragMove);
+      window.addEventListener('touchmove', dragMove, {passive: false});
+      window.addEventListener('mouseup', dragEnd);
+      window.addEventListener('touchend', dragEnd);
+    }
+    function dragMove(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      let clientX, clientY;
+      if(e.type.startsWith('touch')) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      const deltaX = clientX - startX;
+      const deltaY = clientY - startY;
+
+      // Calculate new position relative to loveLetter container
+      const letterRect = loveLetter.getBoundingClientRect();
+
+      let newLeft = origX + deltaX - letterRect.left;
+      let newTop = origY + deltaY - letterRect.top;
+
+      // Clamp inside letter
+      newLeft = Math.max(0, Math.min(newLeft, letterRect.width - elem.offsetWidth));
+      newTop = Math.max(0, Math.min(newTop, letterRect.height - elem.offsetHeight));
+
+      elem.style.left = newLeft + 'px';
+      elem.style.top = newTop + 'px';
+    }
+    function dragEnd(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      elem.style.cursor = 'move';
+      window.removeEventListener('mousemove', dragMove);
+      window.removeEventListener('touchmove', dragMove);
+      window.removeEventListener('mouseup', dragEnd);
+      window.removeEventListener('touchend', dragEnd);
+    }
+
+    elem.addEventListener('mousedown', dragStart);
+    elem.addEventListener('touchstart', dragStart, {passive: false});
+  }
+
+  // Initialize existing emojis inside letter (if any)
+  loveLetter.querySelectorAll('.draggable-emoji').forEach(makeEmojiDraggable);
+
+  // Accessibility: allow emoji panel keyboard selection & adding emoji by Enter/Space
+  emojiPanel.addEventListener('keydown', (e) => {
+    if(e.target.classList.contains('emoji')) {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        // Add emoji in center of loveLetter
+        const letterRect = loveLetter.getBoundingClientRect();
+        const emojiElem = document.createElement('span');
+        emojiElem.textContent = e.target.textContent;
+        emojiElem.className = 'draggable-emoji';
+        emojiElem.style.position = 'absolute';
+        emojiElem.style.left = (letterRect.width / 2 - 16) + 'px';
+        emojiElem.style.top = (letterRect.height / 2 - 16) + 'px';
+        emojiElem.style.fontSize = '32px';
+        emojiElem.style.cursor = 'move';
+        emojiElem.style.userSelect = 'none';
+        emojiElem.style.zIndex = '10';
+
+        makeEmojiDraggable(emojiElem);
+        loveLetter.appendChild(emojiElem);
+      }
+    }
+  });
 </script>
 
 </body>
