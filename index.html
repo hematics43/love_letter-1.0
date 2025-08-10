@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Love Letter UI - With Share Buttons</title>
+<title>Love Letter UI - Mobile Friendly</title>
 <style>
   /* Reset & base */
   * {
@@ -12,7 +12,7 @@
   body {
     font-family: Arial, sans-serif;
     background: #f8f4ef;
-    margin: 20px;
+    margin: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,13 +20,14 @@
     color: #333;
   }
   #controls {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 18px 24px;
+    gap: 14px 18px;
     align-items: center;
     justify-content: center;
-    max-width: 650px;
+    max-width: 600px;
+    width: 100%;
   }
   label {
     font-weight: 600;
@@ -59,9 +60,10 @@
 
   /* Love letter box */
   .love-letter {
-    width: 600px;
-    min-height: 440px;
-    padding: 38px 48px;
+    width: 100%;
+    max-width: 600px;
+    min-height: 400px;
+    padding: 30px 38px;
     border-radius: 16px;
     box-shadow: 0 12px 25px rgba(0,0,0,0.2);
     background: white;
@@ -75,7 +77,7 @@
     box-shadow: 0 12px 35px rgba(255, 107, 107, 0.7);
   }
 
-  /* Paper styles with subtle textures */
+  /* Paper styles */
   .paper-style-1 {
     background: #fff9f6 url('https://www.transparenttextures.com/patterns/pw-maze-white.png') repeat;
     border: 1px solid #e8d7cd;
@@ -151,16 +153,16 @@
     cursor: text;
   }
   .title {
-    font-size: 2.8rem;
-    margin-bottom: 18px;
+    font-size: 2.4rem;
+    margin-bottom: 16px;
     font-weight: 700;
   }
   .message {
-    font-size: 1.4rem;
-    margin-bottom: 30px;
+    font-size: 1.3rem;
+    margin-bottom: 26px;
   }
   .sender {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     text-align: right;
     font-style: italic;
   }
@@ -177,53 +179,25 @@
     border: 0;
   }
 
-  /* Share buttons container */
-  #shareButtons {
-    margin-top: 30px;
-    display: flex;
-    gap: 18px;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 650px;
-  }
-  #shareButtons button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 10px 18px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: white;
-    user-select: none;
-  }
-  #shareWhatsapp {
-    background-color: #25d366;
-  }
-  #shareWhatsapp:hover {
-    background-color: #1da851;
-  }
-  #shareFacebook {
-    background-color: #3b5998;
-  }
-  #shareFacebook:hover {
-    background-color: #2d4373;
-  }
-  #shareInstagram {
-    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
-  }
-  #shareInstagram:hover {
-    filter: brightness(0.9);
-  }
-
-  /* Icons inline SVG */
-  .btn-icon {
-    width: 22px;
-    height: 22px;
-    fill: currentColor;
+  /* Responsive */
+  @media (max-width: 650px) {
+    #controls {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .love-letter {
+      padding: 20px 24px;
+      min-height: 360px;
+    }
+    .title {
+      font-size: 2rem;
+    }
+    .message {
+      font-size: 1.1rem;
+    }
+    .sender {
+      font-size: 1rem;
+    }
   }
 </style>
 
@@ -272,21 +246,6 @@
   </p>
 </div>
 
-<div id="shareButtons" aria-label="Share love letter as PNG">
-  <button id="shareWhatsapp" aria-label="Share on WhatsApp">
-    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.89 11.89 0 0012 0C5.372 0 0 5.372 0 12a11.84 11.84 0 001.64 6.12L0 24l5.99-1.57A11.89 11.89 0 0012 24c6.627 0 12-5.372 12-12 0-3.2-1.27-6.2-3.48-8.52zM12 21.5a9.48 9.48 0 01-4.84-1.44l-.34-.22-3.56.93.95-3.48-.23-.36A9.5 9.5 0 1121.5 12c0 5.25-4.25 9.5-9.5 9.5zm5.44-7.27c-.26-.13-1.54-.77-1.78-.86-.24-.09-.41-.13-.58.13s-.67.86-.82 1.04-.3.2-.56.07a6.76 6.76 0 01-2-1.23 7.46 7.46 0 01-1.39-1.73c-.15-.26 0-.4.11-.52.12-.12.26-.3.39-.45.13-.15.17-.26.26-.43a.56.56 0 00.04-.41c-.09-.13-.57-1.37-.78-1.88s-.4-.43-.58-.43-.42-.01-.64-.01a1.48 1.48 0 00-1.08.5c-.38.38-1.44 1.41-1.44 3.43s1.48 3.98 1.68 4.26c.2.26 2.9 4.44 7.02 6.23a7.56 7.56 0 003.22.5c.22 0 .66-.09.95-.4s1.28-1.24 1.28-2.44c0-1.2-.96-2.23-1.08-2.39z"/></svg>
-    WhatsApp
-  </button>
-  <button id="shareFacebook" aria-label="Share on Facebook">
-    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.675 0h-21.35C.596 0 0 .593 0 1.326v21.348C0 23.408.596 24 1.325 24H12.81v-9.294H9.692v-3.622h3.12V8.413c0-3.1 1.894-4.788 4.66-4.788 1.325 0 2.466.099 2.797.143v3.243l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.31h3.587l-.467 3.622h-3.12V24h6.116C23.404 24 24 23.408 24 22.674V1.326C24 .593 23.404 0 22.675 0z"/></svg>
-    Facebook
-  </button>
-  <button id="shareInstagram" aria-label="Share on Instagram">
-    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 2A3.75 3.75 0 004 7.75v8.5A3.75 3.75 0 007.75 20h8.5a3.75 3.75 0 003.75-3.75v-8.5A3.75 3.75 0 0016.25 4h-8.5zm4.25 3a4.25 4.25 0 110 8.5 4.25 4.25 0 010-8.5zm0 2a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm3.5-3.25a.75.75 0 110 1.5.75.75 0 010-1.5z"/></svg>
-    Instagram
-  </button>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
   const loveLetter = document.getElementById('loveLetter');
@@ -307,18 +266,15 @@
   });
 
   downloadBtn.addEventListener('click', () => {
+    // Remove focus for crisp canvas
     document.activeElement.blur();
     generateCanvasAndDownload();
   });
 
   async function generateCanvas() {
-    // Remove focus for crisp canvas
-    document.activeElement.blur();
-
-    // Generate canvas
     return await html2canvas(loveLetter, {
       backgroundColor: null,
-      scale: 2,
+      scale: window.devicePixelRatio * 2,
       useCORS: true,
       scrollY: -window.scrollY,
     });
@@ -331,44 +287,6 @@
     link.href = canvas.toDataURL('image/png');
     link.click();
   }
-
-  async function generateCanvasAndGetDataUrl() {
-    const canvas = await generateCanvas();
-    return canvas.toDataURL('image/png');
-  }
-
-  // Share buttons
-
-  const shareWhatsapp = document.getElementById('shareWhatsapp');
-  const shareFacebook = document.getElementById('shareFacebook');
-  const shareInstagram = document.getElementById('shareInstagram');
-
-  shareWhatsapp.addEventListener('click', async () => {
-    const dataUrl = await generateCanvasAndGetDataUrl();
-
-    // Since WhatsApp Web supports sending text+url, we upload image somewhere or fallback:
-    // We cannot directly send an image blob via URL, so for demo we open WhatsApp with text + a fallback link.
-    // Real image sharing requires backend or user to upload manually.
-    const message = encodeURIComponent('Check out this love letter I made! ❤️');
-    const shareUrl = `https://api.whatsapp.com/send?text=${message}`;
-
-    window.open(shareUrl, '_blank');
-  });
-
-  shareFacebook.addEventListener('click', async () => {
-    // Facebook sharing usually requires a URL, not direct image data URI.
-    // We'll open Facebook share dialog with fallback message and ask user to upload manually.
-    const url = encodeURIComponent('https://example.com'); // Change to your page or hosting URL if available
-    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-
-    window.open(facebookShareUrl, '_blank');
-  });
-
-  shareInstagram.addEventListener('click', async () => {
-    // Instagram does not support direct web sharing.
-    // We just alert user to download and share manually.
-    alert('Instagram does not support direct sharing from web. Please download the PNG and share it manually on Instagram.');
-  });
 </script>
 
 </body>
