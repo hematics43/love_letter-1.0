@@ -6,6 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>love letter 1.0</title>
 <style>
+  .version-tag {
+  position: fixed;
+  top: 5px;
+  right: 10px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 0.75rem;
+  color: #f1e8ee;
+  text-shadow: 0 0 5px #1f0111;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.7;
+  z-index: 9999;
+}
+
   .download-btn {
   display: inline-block;
   background: #2d0614;
@@ -524,17 +538,39 @@ font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   // Emoji list (common love/heart emojis + some cute ones)
   const emojis = [
+  // Love & hearts
   '❤️', '😍', '🥰', '😘', '💖', '💕', '💌', '🌹', '💐', '✨',
   '😊', '💞', '❣️', '🌟', '💫', '💗', '💓', '💝', '💛', '🧡',
   '💜', '💚', '💙', '🌷', '🌸', '🌺', '🥺', '😻', '😽', '💟',
+  
+  // Celebration & party
   '🎀', '🎉', '🥳', '💃', '🕺', '🍫', '🍓', '🍰', '🎶', '🌈',
   '🔥', '🌪️', '🌊', '⚡', '🦋', '🌻', '🍒', '🍯', '🍩', '🍦',
+  
+  // Objects & royal
   '💎', '👑', '🕊️', '🌙', '⭐', '🎇', '🎆', '💥', '🎈', '🎁',
-  '🤗', '😇', '🥂', '🍷', '🍸', '🎤', '🎸', '🎹', '🧸', '🐾'
+  
+  // Faces & emotions
+  '🤗', '😇', '🥂', '🍷', '🍸', '🎤', '🎸', '🎹', '🧸', '🐾',
+  
+  // More love & cute
+  '💘', '💖', '💝', '💞', '💕', '💓', '💟', '❣️', '🌹', '🌸',
+  
+  // Romantic and cute faces
+  '😘', '😍', '🥰', '😻', '😽', '🤩', '😚', '😙', '😊', '☺️',
+  
+  // Flowers & nature
+  '🌷', '🌺', '🌼', '🌻', '🌹', '🌸', '🌿', '🍃', '🍂', '🍁',
+  
+  // Sweet treats & drinks
+  '🍰', '🍩', '🍦', '🍫', '🍓', '🍒', '🍯', '🍷', '🍸', '🥂',
+  
+  // Misc fun and cute
+  '🦄', '🐰', '🐻', '🐨', '🐱', '🐾', '🧸', '🎈', '🎀', '🎉',
+  
+  // Sparkles and magic
+  '✨', '💫', '🌟', '🎇', '🎆', '💥', '🔥', '🌈', '⚡', '🌪️'
 ];
-
-
-
   // Create emoji buttons in panel
   emojis.forEach(emoji => {
     const span = document.createElement('span');
@@ -753,6 +789,7 @@ colorBtn.addEventListener('click', () => {
     }
   });
 </script>
+<div class="version-tag">Love Letter 1.0</div>
 
 </body>
 </html>
