@@ -5,6 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Love Letter UI with Emoji Drag & Drop</title>
 <style>
+  @keyframes colorGlow {
+  0% {
+    color: #ff3366;
+    text-shadow: 0 0 5px #ff6699, 0 0 10px #ff3366;
+  }
+  25% {
+    color: #ff66cc;
+    text-shadow: 0 0 10px #ff99cc, 0 0 20px #ff66cc;
+  }
+  50% {
+    color: #ff3399;
+    text-shadow: 0 0 15px #ff66cc, 0 0 30px #ff3399;
+  }
+  75% {
+    color: #ff6699;
+    text-shadow: 0 0 10px #ff99cc, 0 0 20px #ff6699;
+  }
+  100% {
+    color: #ff3366;
+    text-shadow: 0 0 5px #ff6699, 0 0 10px #ff3366;
+  }
+}
+
+.glowing-heading {
+  text-align: center;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 3rem;
+  animation: colorGlow 6s linear infinite;
+  user-select: none;
+  margin-bottom: 20px;
+}
+
   /* Reset & base */
   * {
     box-sizing: border-box;
@@ -274,6 +306,7 @@
 </style>
 </head>
 <body>
+<h1 class="glowing-heading">❤️ Write Your Love Letter ❤️</h1>
 
 <div id="controls" aria-label="Controls for love letter">
   <label for="paperStyleSelect">Paper Style:</label>
