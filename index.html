@@ -5,6 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Love Letter UI with Emoji Drag & Drop</title>
 <style>
+  .download-btn {
+  display: inline-block;
+  background: #f50052;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #8a0447;
+  transition: background 0.3s ease;
+  user-select: none;
+  margin-left: 0px;
+  animation: colorGlow 3s linear infinite;
+
+}
+.color-btn {
+  animation: colorGlow 3s linear infinite;
+  display: inline-block;
+  background: #f50052;
+  border: none;
+  padding: 10px 20px;
+  color: rgb(0, 0, 0);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #8a0447;
+  transition: background 0.3s ease;
+  user-select: none;
+  margin-bottom: 0px;
+}
   @keyframes colorGlow {
   0% {
     color: #ff3366;
@@ -352,8 +385,8 @@
     <option value="font-times-new-roman">Times New Roman</option>
   </select>
   <span id="fontDesc" class="sr-only">Select font style for the letter</span>
-
-  <button id="downloadBtn" title="Download love letter as PNG">Download PNG</button>
+<div><button id="colorBtn" class="color-btn">Change Font Color</button>
+<button id="downloadBtn" class="download-btn">Download as PNG</button></div>
 </div>
 
 <div id="loveLetter" class="love-letter paper-style-1 font-pacifico" contenteditable="false" role="main" aria-label="Editable love letter">
@@ -483,6 +516,23 @@
     draggingEmoji.style.left = (clientX - offsetX) + 'px';
     draggingEmoji.style.top = (clientY - offsetY) + 'px';
   }
+  
+const colorBtn = document.getElementById('colorBtn');
+const loveLetterContent = document.getElementById('loveLetter');
+
+function getRandomColor() {
+  // Generate a random hex color code
+  return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+}
+
+colorBtn.addEventListener('click', () => {
+  const randomColor = getRandomColor();
+
+  // Apply random color to letter content and headings
+  loveLetterContent.style.color = randomColor;
+  document.querySelector('.glowing-heading').style.color = randomColor;
+  document.querySelector('.subheading').style.color = randomColor;
+});
 
   function endDrag(e) {
     if (!draggingEmoji) return;
