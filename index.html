@@ -3,279 +3,288 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Love Letter with Drag & Drop Emojis</title>
-
+<title>Love Letter UI - With Share Buttons</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Indie+Flower&family=Pacifico&family=Roboto&family=Times+New+Roman&display=swap');
-
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
   body {
-    background: #f2e6dc;
-    font-family: 'Georgia', serif;
-    margin: 0;
-    padding: 30px 20px;
+    font-family: Arial, sans-serif;
+    background: #f8f4ef;
+    margin: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    user-select: none;
-    overflow-x: hidden;
+    color: #333;
   }
-
-  .controls {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+  #controls {
     margin-bottom: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 24px;
+    align-items: center;
     justify-content: center;
+    max-width: 650px;
   }
-
-  select {
-    padding: 8px 12px;
+  label {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  select, button {
+    padding: 8px 14px;
     font-size: 1rem;
     border-radius: 6px;
-    border: 1.5px solid #a67c52;
+    border: 1.5px solid #ccc;
+    background: white;
     cursor: pointer;
-    user-select: auto;
+    transition: border-color 0.3s ease;
   }
-
+  select:focus, button:focus {
+    outline: none;
+    border-color: #ff6b6b;
+    box-shadow: 0 0 6px rgba(255,107,107,0.5);
+  }
   button {
-    background-color: #cc4b3a;
-    border: none;
+    background-color: #ff6b6b;
     color: white;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    user-select: none;
+    border: none;
+    font-weight: 700;
     transition: background-color 0.3s ease;
   }
   button:hover {
-    background-color: #b03f2e;
+    background-color: #e14b4b;
   }
 
-  /* Emoji picker (text insert) */
-  .emoji-picker {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 480px;
-    margin-bottom: 30px;
-    user-select: none;
-  }
-  .emoji-picker button {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    padding: 6px 10px;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-  }
-  .emoji-picker button:hover {
-    transform: scale(1.3);
-  }
-
-  /* Draggable emoji palette */
-  .drag-emoji-palette {
-    position: fixed;
-    top: 90px;
-    right: 20px;
-    background: #fff8f7;
-    border: 2px solid #cc4b3a;
-    border-radius: 12px;
-    box-shadow: 0 3px 15px rgba(204,75,58,0.3);
-    padding: 10px 14px;
-    max-width: 100px;
-    user-select: none;
-    z-index: 10000;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-  }
-  .drag-emoji-palette span {
-    font-size: 2.2rem;
-    cursor: grab;
-    user-select: none;
-  }
-  .drag-emoji-palette span:active {
-    cursor: grabbing;
-  }
-
+  /* Love letter box */
   .love-letter {
-    position: relative;
-    max-width: 480px;
-    padding: 40px 50px 50px 50px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    min-height: 320px;
-    background-clip: padding-box;
-    transition: all 0.5s ease;
-    user-select: text;
-    white-space: pre-wrap;
-  }
-
-  .heart {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 3.5rem;
-    color: #cc4b3a;
-    animation: beat 1.3s infinite;
-    opacity: 0.8;
-    filter: drop-shadow(0 0 2px rgba(204,75,58,0.5));
-    user-select: none;
-    transition: color 0.5s ease;
-  }
-
-  @keyframes beat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.25); }
-  }
-
-  /* Editable content styling */
-  .editable {
-    outline: none;
-  }
-  .editable.title {
-    font-family: 'Pacifico', cursive;
-    font-size: 3rem;
-    margin-bottom: 20px;
-    text-align: center;
-    user-select: text;
-    cursor: text;
-  }
-  .editable.message {
-    font-size: 1.2rem;
+    width: 600px;
+    min-height: 440px;
+    padding: 38px 48px;
+    border-radius: 16px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    background: white;
+    color: #333;
     line-height: 1.6;
     user-select: text;
-    cursor: text;
-    min-height: 120px;
+    outline: none;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
   }
-  .editable.sender {
-    margin-top: 35px;
+  .love-letter:focus-within {
+    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.7);
+  }
+
+  /* Paper styles with subtle textures */
+  .paper-style-1 {
+    background: #fff9f6 url('https://www.transparenttextures.com/patterns/pw-maze-white.png') repeat;
+    border: 1px solid #e8d7cd;
+    box-shadow: inset 0 0 8px #d4b5a7;
+  }
+  .paper-style-2 {
+    background: #fefcea url('https://www.transparenttextures.com/patterns/diagmonds-light.png') repeat;
+    border: 2px dashed #e5d7a1;
+  }
+  .paper-style-3 {
+    background: #f4f0ec url('https://www.transparenttextures.com/patterns/cloth-alike.png') repeat;
+    border-left: 10px solid #d9c4b6;
+  }
+  .paper-style-4 {
+    background: linear-gradient(135deg, #fff9f9 25%, #ffecec 100%);
+    border: 1px solid #f1c0c0;
+    background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+  }
+  .paper-style-5 {
+    background: #fff url('https://www.transparenttextures.com/patterns/linen.png') repeat;
+    border: 2px double #d4b2b2;
+  }
+  .paper-style-6 {
+    background: #fcfaf2 url('https://www.transparenttextures.com/patterns/reticula.png') repeat;
+    border: 3px solid #c2b280;
+    box-shadow: inset 0 0 5px #c2b280;
+  }
+  .paper-style-7 {
+    background: linear-gradient(45deg, #f9f7f1 0%, #e6dcd0 100%);
+    border: 1px solid #b5a99e;
+    background-image: url('https://www.transparenttextures.com/patterns/batthern.png');
+  }
+  .paper-style-8 {
+    background: #fffaf0 url('https://www.transparenttextures.com/patterns/french-tiles.png') repeat;
+    border: 1px solid #e0c097;
+    box-shadow: 0 0 15px rgba(224,192,151,0.3);
+  }
+  .paper-style-9 {
+    background: #f6f1e7 url('https://www.transparenttextures.com/patterns/crissxcross.png') repeat;
+    border: 4px ridge #d9c6b8;
+  }
+  .paper-style-10 {
+    background: repeating-linear-gradient(
+      45deg,
+      #fff,
+      #fff 10px,
+      #f0e6d2 10px,
+      #f0e6d2 20px
+    );
+    border: 2px solid #cfc3a6;
+  }
+
+  /* Fonts */
+  .font-pacifico {
+    font-family: 'Pacifico', cursive;
+  }
+  .font-dancing-script {
     font-family: 'Dancing Script', cursive;
-    font-size: 1.6rem;
-    text-align: right;
-    user-select: text;
+  }
+  .font-indie-flower {
+    font-family: 'Indie Flower', cursive;
+  }
+  .font-roboto {
+    font-family: 'Roboto', sans-serif;
+  }
+  .font-times-new-roman {
+    font-family: 'Times New Roman', serif;
+  }
+
+  /* Editable text */
+  .editable {
+    outline: none;
     cursor: text;
   }
-
-  /* PAPER STYLES */
-  /* (same as before) */
-  .paper-style-1 { background: #fffef8; border: 1.5px solid #d3c4a8; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), inset 0 0 15px rgba(200, 180, 160, 0.3); color: #5a3d2b; }
-  .paper-style-1 .heart { color: #cc4b3a; }
-  .paper-style-1 .editable { color: #5a3d2b; }
-  .paper-style-2 { background: linear-gradient(135deg, #f4ecd8, #e8dfb7); border: 2px dashed #a9925a; box-shadow: 0 6px 18px rgba(169, 150, 90, 0.4); color: #6b5e33; font-style: italic; }
-  .paper-style-2 .heart { color: #a67532; }
-  .paper-style-2 .editable { color: #6b5e33; }
-  .paper-style-3 { background: #fff0f5; border: 2px solid #d36a91; box-shadow: 0 5px 20px rgba(211, 106, 145, 0.3); color: #802749; }
-  .paper-style-3 .heart { color: #d9437e; }
-  .paper-style-3 .editable { color: #802749; }
-  .paper-style-4 { background: repeating-linear-gradient(to bottom,#fbf6ea,#fbf6ea 28px,#d7ccc2 29px,#fbf6ea 30px); border: 1px solid #a89785; box-shadow: inset 0 0 10px #bfb2a5; color: #5e5147; font-family: 'Courier New', Courier, monospace; }
-  .paper-style-4 .heart { color: #a6523a; }
-  .paper-style-4 .editable { color: #5e5147; }
-  .paper-style-5 { background: repeating-linear-gradient(to bottom,#e9f0ff,#e9f0ff 22px,#a1c2f1 23px,#e9f0ff 24px); border: 1.5px solid #5a7db8; box-shadow: 0 0 8px rgba(90, 125, 184, 0.25); color: #244170; font-family: 'Arial', sans-serif; }
-  .paper-style-5 .heart { color: #2e5ca3; }
-  .paper-style-5 .editable { color: #244170; }
-  .paper-style-6 { background: #cbb994; border: 3px solid #7d653a; box-shadow: inset 0 0 8px #a58e60; color: #4a3a1a; font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; }
-  .paper-style-6 .heart { color: #785c1f; }
-  .paper-style-6 .editable { color: #4a3a1a; }
-  .paper-style-7 { background: linear-gradient(135deg, #e7d9f0, #d9c2e3); border: 2px solid #a084b7; box-shadow: 0 5px 15px rgba(160, 132, 183, 0.3); color: #5e4b7a; font-family: 'Georgia', serif; }
-  .paper-style-7 .heart { color: #8c6db6; }
-  .paper-style-7 .editable { color: #5e4b7a; }
-  .paper-style-8 { background: repeating-linear-gradient(45deg,#f9f5ec,#f9f5ec 15px,#f1e8d9 15px,#f1e8d9 20px); border: 1.5px solid #d9c9a3; box-shadow: inset 0 0 12px rgba(200, 180, 130, 0.2); color: #6b5d3b; }
-  .paper-style-8 .heart { color: #af9462; }
-  .paper-style-8 .editable { color: #6b5d3b; }
-  .paper-style-9 { background: linear-gradient(135deg, #ffe8d6, #fbd1b8); border: 2px dotted #d9946f; box-shadow: 0 4px 12px rgba(217, 148, 111, 0.3); color: #9e5f3c; font-family: 'Times New Roman', serif; }
-  .paper-style-9 .heart { color: #c7622f; }
-  .paper-style-9 .editable { color: #9e5f3c; }
-  .paper-style-10 { background: #fefefe; border: 1px solid #ccc; box-shadow: inset 0 0 3px rgba(0,0,0,0.05), 0 3px 8px rgba(0,0,0,0.1); background-image: url('https://www.transparenttextures.com/patterns/crumpled-paper.png'); color: #3a3a3a; font-family: 'Calibri', sans-serif; }
-  .paper-style-10 .heart { color: #b53131; }
-  .paper-style-10 .editable { color: #3a3a3a; }
-
-  /* FONTS */
-  .font-roboto { font-family: 'Roboto', sans-serif !important; }
-  .font-dancing-script { font-family: 'Dancing Script', cursive !important; }
-  .font-pacifico { font-family: 'Pacifico', cursive !important; }
-  .font-indie-flower { font-family: 'Indie Flower', cursive !important; }
-  .font-times-new-roman { font-family: 'Times New Roman', serif !important; }
-
-  /* Floating emojis placed by user */
-  .floating-emoji {
-    position: absolute;
+  .title {
     font-size: 2.8rem;
-    cursor: grab;
-    user-select: none;
-    z-index: 5000;
-    transition: transform 0.1s ease;
+    margin-bottom: 18px;
+    font-weight: 700;
   }
-  .floating-emoji:active {
-    cursor: grabbing;
-    transform: scale(1.2);
+  .message {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+  }
+  .sender {
+    font-size: 1.15rem;
+    text-align: right;
+    font-style: italic;
+  }
+
+  /* Accessibility helper */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }
+
+  /* Share buttons container */
+  #shareButtons {
+    margin-top: 30px;
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 650px;
+  }
+  #shareButtons button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+    user-select: none;
+  }
+  #shareWhatsapp {
+    background-color: #25d366;
+  }
+  #shareWhatsapp:hover {
+    background-color: #1da851;
+  }
+  #shareFacebook {
+    background-color: #3b5998;
+  }
+  #shareFacebook:hover {
+    background-color: #2d4373;
+  }
+  #shareInstagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  }
+  #shareInstagram:hover {
+    filter: brightness(0.9);
+  }
+
+  /* Icons inline SVG */
+  .btn-icon {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
   }
 </style>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Indie+Flower&family=Pacifico&family=Roboto&display=swap" rel="stylesheet" />
+
 </head>
 <body>
 
-<div class="controls">
-  <select id="paperStyleSelect" title="Select Paper Style">
-    <option value="paper-style-1">Classic Cream</option>
-    <option value="paper-style-2">Old Parchment</option>
-    <option value="paper-style-3">Pink Rose</option>
-    <option value="paper-style-4">Vintage Lined</option>
-    <option value="paper-style-5">Blue Notebook</option>
-    <option value="paper-style-6">Rustic Kraft</option>
-    <option value="paper-style-7">Soft Lavender</option>
-    <option value="paper-style-8">Diagonal Stripes</option>
-    <option value="paper-style-9">Soft Peach</option>
-    <option value="paper-style-10">Crumpled Paper</option>
+<div id="controls" aria-label="Controls for love letter">
+  <label for="paperStyleSelect">Paper Style:</label>
+  <select id="paperStyleSelect" aria-describedby="paperStyleDesc">
+    <option value="paper-style-1" selected>Style 1</option>
+    <option value="paper-style-2">Style 2</option>
+    <option value="paper-style-3">Style 3</option>
+    <option value="paper-style-4">Style 4</option>
+    <option value="paper-style-5">Style 5</option>
+    <option value="paper-style-6">Style 6</option>
+    <option value="paper-style-7">Style 7</option>
+    <option value="paper-style-8">Style 8</option>
+    <option value="paper-style-9">Style 9</option>
+    <option value="paper-style-10">Style 10</option>
   </select>
+  <span id="paperStyleDesc" class="sr-only">Select the background style of the letter</span>
 
-  <select id="fontSelect" title="Select Font">
-    <option value="font-pacifico">Pacifico</option>
+  <label for="fontSelect">Font:</label>
+  <select id="fontSelect" aria-describedby="fontDesc">
+    <option value="font-pacifico" selected>Pacifico</option>
     <option value="font-dancing-script">Dancing Script</option>
     <option value="font-indie-flower">Indie Flower</option>
     <option value="font-roboto">Roboto</option>
     <option value="font-times-new-roman">Times New Roman</option>
   </select>
+  <span id="fontDesc" class="sr-only">Select font style for the letter</span>
 
-  <button id="downloadBtn" title="Download as PNG">Download PNG</button>
+  <button id="downloadBtn" title="Download love letter as PNG">Download PNG</button>
 </div>
 
-<!-- Emoji picker for text insertion -->
-<div class="emoji-picker" aria-label="Emoji picker">
-  <button type="button" aria-label="Add ❤️">❤️</button>
-  <button type="button" aria-label="Add 😘">😘</button>
-  <button type="button" aria-label="Add 😍">😍</button>
-  <button type="button" aria-label="Add 🥰">🥰</button>
-  <button type="button" aria-label="Add 💌">💌</button>
-  <button type="button" aria-label="Add 💕">💕</button>
-  <button type="button" aria-label="Add 🌹">🌹</button>
-  <button type="button" aria-label="Add 🎀">🎀</button>
-  <button type="button" aria-label="Add ✨">✨</button>
-  <button type="button" aria-label="Add 💖">💖</button>
-</div>
-
-<!-- Draggable emoji palette -->
-<div class="drag-emoji-palette" aria-label="Drag emojis to place">
-  <span draggable="true" role="img" aria-label="❤️">❤️</span>
-  <span draggable="true" role="img" aria-label="😘">😘</span>
-  <span draggable="true" role="img" aria-label="😍">😍</span>
-  <span draggable="true" role="img" aria-label="🥰">🥰</span>
-  <span draggable="true" role="img" aria-label="💌">💌</span>
-  <span draggable="true" role="img" aria-label="💕">💕</span>
-  <span draggable="true" role="img" aria-label="🌹">🌹</span>
-  <span draggable="true" role="img" aria-label="🎀">🎀</span>
-  <span draggable="true" role="img" aria-label="✨">✨</span>
-  <span draggable="true" role="img" aria-label="💖">💖</span>
-</div>
-
-<!-- The love letter -->
 <div id="loveLetter" class="love-letter paper-style-1 font-pacifico" contenteditable="false" role="main" aria-label="Editable love letter">
-  <div class="heart" aria-hidden="true">❤️</div>
-  <h1 class="editable title" contenteditable="true" aria-label="Letter Title">My Beloved</h1>
-  <p class="editable message" contenteditable="true" aria-label="Letter Message">Every moment with you is a treasure. Your smile brightens my darkest days, and your love fills my heart with joy.</p>
-  <p class="editable sender" contenteditable="true" aria-label="Letter Sender">With love,<br />Your Sweetheart</p>
+  <h1 class="editable title" contenteditable="true" aria-label="Letter Title" spellcheck="true">My Beloved</h1>
+  <p class="editable message" contenteditable="true" aria-label="Letter Message" spellcheck="true">
+    Every moment with you is a treasure. Your smile brightens my darkest days, and your love fills my heart with joy.
+  </p>
+  <p class="editable sender" contenteditable="true" aria-label="Letter Sender" spellcheck="true">
+    With love,<br />Your Sweetheart
+  </p>
+</div>
+
+<div id="shareButtons" aria-label="Share love letter as PNG">
+  <button id="shareWhatsapp" aria-label="Share on WhatsApp">
+    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.89 11.89 0 0012 0C5.372 0 0 5.372 0 12a11.84 11.84 0 001.64 6.12L0 24l5.99-1.57A11.89 11.89 0 0012 24c6.627 0 12-5.372 12-12 0-3.2-1.27-6.2-3.48-8.52zM12 21.5a9.48 9.48 0 01-4.84-1.44l-.34-.22-3.56.93.95-3.48-.23-.36A9.5 9.5 0 1121.5 12c0 5.25-4.25 9.5-9.5 9.5zm5.44-7.27c-.26-.13-1.54-.77-1.78-.86-.24-.09-.41-.13-.58.13s-.67.86-.82 1.04-.3.2-.56.07a6.76 6.76 0 01-2-1.23 7.46 7.46 0 01-1.39-1.73c-.15-.26 0-.4.11-.52.12-.12.26-.3.39-.45.13-.15.17-.26.26-.43a.56.56 0 00.04-.41c-.09-.13-.57-1.37-.78-1.88s-.4-.43-.58-.43-.42-.01-.64-.01a1.48 1.48 0 00-1.08.5c-.38.38-1.44 1.41-1.44 3.43s1.48 3.98 1.68 4.26c.2.26 2.9 4.44 7.02 6.23a7.56 7.56 0 003.22.5c.22 0 .66-.09.95-.4s1.28-1.24 1.28-2.44c0-1.2-.96-2.23-1.08-2.39z"/></svg>
+    WhatsApp
+  </button>
+  <button id="shareFacebook" aria-label="Share on Facebook">
+    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.675 0h-21.35C.596 0 0 .593 0 1.326v21.348C0 23.408.596 24 1.325 24H12.81v-9.294H9.692v-3.622h3.12V8.413c0-3.1 1.894-4.788 4.66-4.788 1.325 0 2.466.099 2.797.143v3.243l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.31h3.587l-.467 3.622h-3.12V24h6.116C23.404 24 24 23.408 24 22.674V1.326C24 .593 23.404 0 22.675 0z"/></svg>
+    Facebook
+  </button>
+  <button id="shareInstagram" aria-label="Share on Instagram">
+    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 2A3.75 3.75 0 004 7.75v8.5A3.75 3.75 0 007.75 20h8.5a3.75 3.75 0 003.75-3.75v-8.5A3.75 3.75 0 0016.25 4h-8.5zm4.25 3a4.25 4.25 0 110 8.5 4.25 4.25 0 010-8.5zm0 2a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm3.5-3.25a.75.75 0 110 1.5.75.75 0 010-1.5z"/></svg>
+    Instagram
+  </button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -283,11 +292,8 @@
   const loveLetter = document.getElementById('loveLetter');
   const paperStyleSelect = document.getElementById('paperStyleSelect');
   const fontSelect = document.getElementById('fontSelect');
-  const emojiButtons = document.querySelectorAll('.emoji-picker button');
   const downloadBtn = document.getElementById('downloadBtn');
-  const dragEmojiPalette = document.querySelector('.drag-emoji-palette');
 
-  // Change paper style
   paperStyleSelect.addEventListener('change', () => {
     for(let i=1; i<=10; i++){
       loveLetter.classList.remove('paper-style-'+i);
@@ -295,205 +301,75 @@
     loveLetter.classList.add(paperStyleSelect.value);
   });
 
-  // Change font
   fontSelect.addEventListener('change', () => {
     loveLetter.classList.remove('font-pacifico', 'font-dancing-script', 'font-indie-flower', 'font-roboto', 'font-times-new-roman');
     loveLetter.classList.add(fontSelect.value);
   });
 
-  // Insert emoji in editable text at cursor position
-  function insertEmojiAtCursor(emoji) {
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return;
-
-    const range = sel.getRangeAt(0);
-    if (!range) return;
-
-    // Check if selection is inside editable child of loveLetter
-    let currentNode = sel.anchorNode;
-    let editableFound = false;
-    while(currentNode) {
-      if(currentNode === loveLetter) break;
-      if(currentNode.nodeType === 1 && currentNode.classList && currentNode.classList.contains('editable')) {
-        editableFound = true;
-        break;
-      }
-      currentNode = currentNode.parentNode;
-    }
-    if(!editableFound) {
-      // Focus message by default
-      const messageElem = loveLetter.querySelector('.editable.message');
-      messageElem.focus();
-    }
-
-    const sel2 = window.getSelection();
-    if(!sel2.rangeCount) return;
-    const range2 = sel2.getRangeAt(0);
-
-    const emojiNode = document.createTextNode(emoji);
-    range2.deleteContents();
-    range2.insertNode(emojiNode);
-
-    // Move cursor after inserted emoji
-    range2.setStartAfter(emojiNode);
-    range2.setEndAfter(emojiNode);
-    sel2.removeAllRanges();
-    sel2.addRange(range2);
-
-    loveLetter.focus();
-  }
-
-  emojiButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      insertEmojiAtCursor(btn.textContent);
-    });
-  });
-
-  // Download letter and emojis as PNG
   downloadBtn.addEventListener('click', () => {
     document.activeElement.blur();
+    generateCanvasAndDownload();
+  });
 
-    // Container to capture: loveLetter + floating emojis
-    // We can wrap loveLetter and emojis in a temporary div for html2canvas, or capture body and crop.
-    // Here we create a temporary container.
+  async function generateCanvas() {
+    // Remove focus for crisp canvas
+    document.activeElement.blur();
 
-    // Clone loveLetter and emojis for canvas, position relative
-    const tempContainer = document.createElement('div');
-    tempContainer.style.position = 'relative';
-    tempContainer.style.background = getComputedStyle(loveLetter).backgroundColor;
-    tempContainer.style.width = loveLetter.offsetWidth + 'px';
-    tempContainer.style.minHeight = loveLetter.offsetHeight + 'px';
-    tempContainer.style.padding = getComputedStyle(loveLetter).padding;
-    tempContainer.style.borderRadius = getComputedStyle(loveLetter).borderRadius;
-    tempContainer.style.boxShadow = getComputedStyle(loveLetter).boxShadow;
-    tempContainer.style.fontFamily = getComputedStyle(loveLetter).fontFamily;
-    tempContainer.style.color = getComputedStyle(loveLetter).color;
-    tempContainer.style.fontSize = getComputedStyle(loveLetter).fontSize;
-    tempContainer.style.lineHeight = getComputedStyle(loveLetter).lineHeight;
-    tempContainer.style.border = getComputedStyle(loveLetter).border;
-    tempContainer.style.overflow = 'visible';
-
-    // Clone the loveLetter content
-    const cloneLetter = loveLetter.cloneNode(true);
-    cloneLetter.style.position = 'relative';
-    cloneLetter.style.margin = '0';
-    cloneLetter.style.top = '0';
-    cloneLetter.style.left = '0';
-    cloneLetter.style.boxShadow = 'none';
-
-    tempContainer.appendChild(cloneLetter);
-
-    // Clone floating emojis and position them relatively inside tempContainer
-    const floatingEmojis = document.querySelectorAll('.floating-emoji');
-    floatingEmojis.forEach(fe => {
-      const cloneEmoji = fe.cloneNode(true);
-      cloneEmoji.style.position = 'absolute';
-
-      // Calculate position relative to loveLetter top-left
-      const rectLetter = loveLetter.getBoundingClientRect();
-      const rectEmoji = fe.getBoundingClientRect();
-      const left = rectEmoji.left - rectLetter.left;
-      const top = rectEmoji.top - rectLetter.top;
-
-      cloneEmoji.style.left = left + 'px';
-      cloneEmoji.style.top = top + 'px';
-      cloneEmoji.style.margin = '0';
-      cloneEmoji.style.boxShadow = 'none';
-
-      tempContainer.appendChild(cloneEmoji);
-    });
-
-    document.body.appendChild(tempContainer);
-
-    html2canvas(tempContainer, {
+    // Generate canvas
+    return await html2canvas(loveLetter, {
       backgroundColor: null,
       scale: 2,
       useCORS: true,
       scrollY: -window.scrollY,
-    }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'love_letter.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-
-      document.body.removeChild(tempContainer);
-    });
-  });
-
-  // DRAG-AND-DROP EMOJIS LOGIC
-
-  let draggingEmoji = null;
-  let offsetX = 0;
-  let offsetY = 0;
-
-  // When drag starts from palette
-  dragEmojiPalette.querySelectorAll('span').forEach(span => {
-    span.addEventListener('dragstart', e => {
-      draggingEmoji = document.createElement('span');
-      draggingEmoji.classList.add('floating-emoji');
-      draggingEmoji.textContent = span.textContent;
-      draggingEmoji.style.left = e.clientX + 'px';
-      draggingEmoji.style.top = e.clientY + 'px';
-      draggingEmoji.style.position = 'absolute';
-      draggingEmoji.style.zIndex = 5000;
-
-      document.body.appendChild(draggingEmoji);
-
-      offsetX = e.clientX;
-      offsetY = e.clientY;
-
-      // Set drag image transparent (or empty)
-      const crt = document.createElement('canvas');
-      e.dataTransfer.setDragImage(crt, 0, 0);
-    });
-
-    // Prevent default to allow drop events
-    span.addEventListener('dragend', e => {
-      if (!draggingEmoji) return;
-      // Position emoji where dropped
-      draggingEmoji.style.left = e.clientX + 'px';
-      draggingEmoji.style.top = e.clientY + 'px';
-
-      makeEmojiDraggable(draggingEmoji);
-      draggingEmoji = null;
-    });
-  });
-
-  // Make placed emojis draggable with mouse
-  function makeEmojiDraggable(el) {
-    let isDragging = false;
-    let startX, startY, origX, origY;
-
-    el.addEventListener('mousedown', e => {
-      isDragging = true;
-      startX = e.clientX;
-      startY = e.clientY;
-      origX = parseInt(el.style.left, 10);
-      origY = parseInt(el.style.top, 10);
-      el.style.cursor = 'grabbing';
-      e.preventDefault();
-    });
-
-    window.addEventListener('mousemove', e => {
-      if (!isDragging) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      el.style.left = origX + dx + 'px';
-      el.style.top = origY + dy + 'px';
-    });
-
-    window.addEventListener('mouseup', e => {
-      if (!isDragging) return;
-      isDragging = false;
-      el.style.cursor = 'grab';
     });
   }
 
+  async function generateCanvasAndDownload() {
+    const canvas = await generateCanvas();
+    const link = document.createElement('a');
+    link.download = 'love_letter.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
 
+  async function generateCanvasAndGetDataUrl() {
+    const canvas = await generateCanvas();
+    return canvas.toDataURL('image/png');
+  }
 
+  // Share buttons
 
+  const shareWhatsapp = document.getElementById('shareWhatsapp');
+  const shareFacebook = document.getElementById('shareFacebook');
+  const shareInstagram = document.getElementById('shareInstagram');
 
-  
+  shareWhatsapp.addEventListener('click', async () => {
+    const dataUrl = await generateCanvasAndGetDataUrl();
+
+    // Since WhatsApp Web supports sending text+url, we upload image somewhere or fallback:
+    // We cannot directly send an image blob via URL, so for demo we open WhatsApp with text + a fallback link.
+    // Real image sharing requires backend or user to upload manually.
+    const message = encodeURIComponent('Check out this love letter I made! ❤️');
+    const shareUrl = `https://api.whatsapp.com/send?text=${message}`;
+
+    window.open(shareUrl, '_blank');
+  });
+
+  shareFacebook.addEventListener('click', async () => {
+    // Facebook sharing usually requires a URL, not direct image data URI.
+    // We'll open Facebook share dialog with fallback message and ask user to upload manually.
+    const url = encodeURIComponent('https://example.com'); // Change to your page or hosting URL if available
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+    window.open(facebookShareUrl, '_blank');
+  });
+
+  shareInstagram.addEventListener('click', async () => {
+    // Instagram does not support direct web sharing.
+    // We just alert user to download and share manually.
+    alert('Instagram does not support direct sharing from web. Please download the PNG and share it manually on Instagram.');
+  });
 </script>
+
 </body>
 </html>
